@@ -20,4 +20,8 @@ public abstract class Constantes {
     // Spaceship move
     public static final int SPACESHIP_XMOVE = 1;
 
+    //Spaceship's Moves limits
+    public static final int SPACESHIP_LIMIT_LEFT = 60;
+    public static final int SPACESHIP_LIMIT_RIGHT = 500;
+
 }

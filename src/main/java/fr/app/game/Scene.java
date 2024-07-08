@@ -1,6 +1,8 @@
 package fr.app.game;
 
 import fr.app.entities.Spaceship;
+import fr.app.ressources.Chrono;
+import fr.app.ressources.Clavier;
 import fr.app.ressources.Constantes;
 
 import java.awt.*;
@@ -15,6 +17,13 @@ public class Scene extends JPanel {
 /***** CONSTRUCTEUR *****/
     public Scene() {
         super();
+
+        this.setFocusable(true);
+        this.requestFocusInWindow();
+        this.addKeyListener(new Clavier());
+
+        Thread screenChrono = new Thread(new Chrono());
+        screenChrono.start();
 
     }
 
@@ -33,7 +42,7 @@ public class Scene extends JPanel {
         graphics2D.fillRect(30, 530, 535, 5);
 
         // Affichage du vaisseau
-        graphics2D.drawImage(this.spaceship.getImage(), this.spaceship.getxPos(), this.spaceship.getyPos(), null);
+        graphics2D.drawImage(this.spaceship.getImage(), this.spaceship.moveSpaceship(), this.spaceship.getyPos(), null);
 
     }
 }
