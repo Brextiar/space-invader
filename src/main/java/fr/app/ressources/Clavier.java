@@ -14,10 +14,15 @@ public class Clavier implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            Main.scene.spaceship.setxMove(Constantes.SPACESHIP_XMOVE);
+            Main.scene.spaceship.setxMove(Constantes.SPACESHIP_X_MOVE);
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            Main.scene.spaceship.setxMove(-Constantes.SPACESHIP_XMOVE);
-
+            Main.scene.spaceship.setxMove(-Constantes.SPACESHIP_X_MOVE);
+        } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            if (!Main.scene.spaceshipFire.isFiring()){
+                Main.scene.spaceshipFire.setyPos(Constantes.SPACESHIP_Y_POS - Constantes.SPACESHIP_FIRE_HEIGHT);
+                Main.scene.spaceshipFire.setxPos(Main.scene.spaceship.getxPos() + (Constantes.SPACESHIP_WIDTH / 2) - 1);
+                Main.scene.spaceshipFire.setFiring(true);
+            }
         }
     }
 

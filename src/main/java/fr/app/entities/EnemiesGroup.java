@@ -23,21 +23,21 @@ public class EnemiesGroup {
 
         for (int column = 0; column < 10; column++) {
             this.enemiesGroup[0][column] = new Enemy(
-                    Constantes.ENEMY_INIT_XPOS + (Constantes.ENEMY_WIDTH + Constantes.ENEMY_COL_GAP) * column,
-                    Constantes.ENEMY_INIT_YPOS,
+                    Constantes.ENEMY_INIT_X_POS + (Constantes.ENEMY_WIDTH + Constantes.ENEMY_COL_GAP) * column,
+                    Constantes.ENEMY_INIT_Y_POS,
                     "images/alienHaut1.png",
                     "images/alienHaut2.png");
             for (int row = 1; row < 3; row++) {
                 this.enemiesGroup[row][column] = new Enemy(
-                        Constantes.ENEMY_INIT_XPOS + (Constantes.ENEMY_WIDTH + Constantes.ENEMY_COL_GAP) * column,
-                        Constantes.ENEMY_INIT_YPOS + Constantes.ENEMY_RAW_GAP * row,
+                        Constantes.ENEMY_INIT_X_POS + (Constantes.ENEMY_WIDTH + Constantes.ENEMY_COL_GAP) * column,
+                        Constantes.ENEMY_INIT_Y_POS + Constantes.ENEMY_RAW_GAP * row,
                         "images/alienMilieu1.png",
                         "images/alienMilieu2.png");
             }
             for (int row = 3; row < 5; row++) {
                 this.enemiesGroup[row][column] = new Enemy(
-                        Constantes.ENEMY_INIT_XPOS + (Constantes.ENEMY_WIDTH + Constantes.ENEMY_COL_GAP) * column,
-                        Constantes.ENEMY_INIT_YPOS + Constantes.ENEMY_RAW_GAP * row,
+                        Constantes.ENEMY_INIT_X_POS + (Constantes.ENEMY_WIDTH + Constantes.ENEMY_COL_GAP) * column,
+                        Constantes.ENEMY_INIT_Y_POS + Constantes.ENEMY_RAW_GAP * row,
                         "images/alienBas1.png",
                         "images/alienBas2.png");
             }

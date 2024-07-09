@@ -2,6 +2,7 @@ package fr.app.game;
 
 import fr.app.entities.EnemiesGroup;
 import fr.app.entities.Spaceship;
+import fr.app.entities.SpaceshipFire;
 import fr.app.ressources.Chrono;
 import fr.app.ressources.Clavier;
 import fr.app.ressources.Constantes;
@@ -15,6 +16,7 @@ public class Scene extends JPanel {
 
     public Spaceship spaceship = new Spaceship();
     public EnemiesGroup enemiesGroup = new EnemiesGroup();
+    public SpaceshipFire spaceshipFire = new SpaceshipFire();
 
 /***** CONSTRUCTEUR *****/
     public Scene() {
@@ -48,5 +50,10 @@ public class Scene extends JPanel {
 
         // Affichage des ennemis
         this.enemiesGroup.drawEnemies(graphics2D);
+
+        //affichage du tir
+        if (this.spaceshipFire.isFiring()) {
+            this.spaceshipFire.drawSpaceshipFire(graphics2D);
+        }
     }
 }

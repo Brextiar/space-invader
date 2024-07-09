@@ -8,8 +8,8 @@ import java.awt.*;
 public class Spaceship extends Entity {
 
     public Spaceship() {
-        super.xPos = Constantes.SPACESHIP_XPOS;
-        super.yPos = Constantes.SPACESHIP_YPOS;
+        super.xPos = Constantes.SPACESHIP_X_POS;
+        super.yPos = Constantes.SPACESHIP_Y_POS;
         super.width = Constantes.SPACESHIP_WIDTH;
         super.height = Constantes.SPACESHIP_HEIGHT;
         super.xMove = 0;
