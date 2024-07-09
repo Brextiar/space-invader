@@ -1,5 +1,6 @@
 package fr.app.game;
 
+import fr.app.entities.Castle;
 import fr.app.entities.EnemiesGroup;
 import fr.app.entities.Spaceship;
 import fr.app.entities.SpaceshipFire;
@@ -17,10 +18,15 @@ public class Scene extends JPanel {
     public Spaceship spaceship = new Spaceship();
     public EnemiesGroup enemiesGroup = new EnemiesGroup();
     public SpaceshipFire spaceshipFire = new SpaceshipFire();
+    public Castle[] castle = new Castle[4];
 
 /***** CONSTRUCTEUR *****/
     public Scene() {
         super();
+
+        for (int col = 0; col < 4; col++) {
+            this.castle[col] = new Castle(Constantes.SCREEN_MARGIN + Constantes.CASTLE_INIT_POS_X + col * (Constantes.CASTLE_WIDTH + Constantes.CASTLE_GAP));
+        }
 
         this.setFocusable(true);
         this.requestFocusInWindow();
@@ -58,5 +64,10 @@ public class Scene extends JPanel {
 
         // detection kill enemy
         this.enemiesGroup.fireTouchEnemy(this.spaceshipFire);
+
+        //dessin des chateaux
+        for (Castle castle : this.castle) {
+            castle.drawCastle(graphics2D);
+        }
     }
 }
