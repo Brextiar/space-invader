@@ -36,7 +36,7 @@ public abstract class Constantes {
     public static final int ENEMY_COL_GAP = 10;
 
     // Enemy move
-    public static final int ENEMY_X_MOVE = 5;
-    public static final int ENEMY_Y_MOVE = 25;
-
+    public static final int ENEMY_X_MOVE = 2;
+    public static final int ENEMY_Y_MOVE = 20;
+    public static final int ENEMY_SPEED = 1;
 }

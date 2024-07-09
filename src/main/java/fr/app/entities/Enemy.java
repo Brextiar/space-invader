@@ -20,4 +20,13 @@ public class Enemy  extends Entity {
         super.image = this.icon.getImage();
     }
 
+    public void choiceImg(boolean isPosition1) {
+        if (isPosition1) {
+            super.icon = new ImageIcon(getClass().getClassLoader().getResource(super.strImg1));
+        } else {
+            super.icon = new ImageIcon(getClass().getClassLoader().getResource(super.strImg2));
+        }
+
+        super.image = this.icon.getImage();
+    }
 }

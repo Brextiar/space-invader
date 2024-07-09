@@ -44,7 +44,7 @@ public class Scene extends JPanel {
         graphics2D.fillRect(30, 530, 535, 5);
 
         // Affichage du vaisseau
-        graphics2D.drawImage(this.spaceship.getImage(), this.spaceship.moveSpaceship(), this.spaceship.getyPos(), null);
+        this.spaceship.drawSpaceship(graphics2D);
 
         // Affichage des ennemis
         this.enemiesGroup.drawEnemies(graphics2D);

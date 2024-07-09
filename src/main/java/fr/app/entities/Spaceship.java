@@ -3,6 +3,7 @@ package fr.app.entities;
 import fr.app.ressources.Constantes;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Spaceship extends Entity {
 
@@ -31,5 +32,9 @@ public class Spaceship extends Entity {
             }
         }
         return this.xPos;
+    }
+
+    public void drawSpaceship(Graphics graphics) {
+        graphics.drawImage(this.image, this.moveSpaceship(), this.yPos, null);
     }
 }
