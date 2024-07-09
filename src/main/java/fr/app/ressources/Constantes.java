@@ -44,4 +44,15 @@ public abstract class Constantes {
     public static final int SPACESHIP_FIRE_WIDTH = 3;
     public static final int SPACESHIP_FIRE_HEIGHT = 13;
     public static final int SPACESHIP_FIRE_Y_MOVE = 2;
+
+    /***** CASTLE *****/
+    //dimension d'une brique
+    public static final int BRICK_DIMENTION = 2;
+    // dimension du chateau (multiple d'une brique)
+    public static final int CASTLE_WIDTH = 72;
+    public static final int CASTLE_HEIGHT = 54;
+    // position des chateaux
+    public static final int CASTLE_POS_Y = 400;
+    public static final int CASTLE_INIT_POS_X = 39;
+    public static final int CASTLE_GAP = 42;
 }
