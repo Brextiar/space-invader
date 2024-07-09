@@ -11,6 +11,8 @@ public class EnemiesGroup {
     private boolean goRight, isPosition1;
     private int speed;
 
+    private int[] deadEnemies = {-1,-1};
+
     public EnemiesGroup() {
 
         this.enemiesGroupInit();
@@ -62,8 +64,10 @@ public class EnemiesGroup {
     public boolean isLeftBorderReached() {
         for (int column = 0; column < 10; column++) {
             for (int row = 0; row < 5; row++) {
-                if (this.enemiesGroup[row][column].getxPos() < Constantes.SCREEN_MARGIN) {
-                    return true;
+                if (this.enemiesGroup[row][column] != null) {
+                    if (this.enemiesGroup[row][column].getxPos() < Constantes.SCREEN_MARGIN) {
+                        return true;
+                    }
                 }
             }
         }
@@ -73,8 +77,10 @@ public class EnemiesGroup {
     public boolean isRightBorderReached() {
         for (int column = 0; column < 10; column++) {
             for (int row = 0; row < 5; row++) {
-                if (this.enemiesGroup[row][column].getxPos() + this.enemiesGroup[row][column].getWidth() > Constantes.SCREEN_WIDTH - Constantes.SCREEN_MARGIN) {
-                    return true;
+                if (this.enemiesGroup[row][column] != null) {
+                    if (this.enemiesGroup[row][column].getxPos() + this.enemiesGroup[row][column].getWidth() > Constantes.SCREEN_WIDTH - Constantes.SCREEN_MARGIN) {
+                        return true;
+                    }
                 }
             }
         }
@@ -85,7 +91,9 @@ public class EnemiesGroup {
         if(isRightBorderReached()) {
             for (int column = 0; column < 10; column++) {
                 for (int row = 0; row < 5; row++) {
-                    this.enemiesGroup[row][column].setyPos(this.enemiesGroup[row][column].getyPos() + Constantes.ENEMY_Y_MOVE);
+                    if (this.enemiesGroup[row][column] != null) {
+                        this.enemiesGroup[row][column].setyPos(this.enemiesGroup[row][column].getyPos() + Constantes.ENEMY_Y_MOVE);
+                    }
                 }
             }
             this.goRight = false;
@@ -95,7 +103,9 @@ public class EnemiesGroup {
         } else if(isLeftBorderReached()) {
             for (int column = 0; column < 10; column++) {
                 for (int row = 0; row < 5; row++) {
-                    this.enemiesGroup[row][column].setyPos(this.enemiesGroup[row][column].getyPos() + Constantes.ENEMY_Y_MOVE);
+                    if (this.enemiesGroup[row][column] != null) {
+                        this.enemiesGroup[row][column].setyPos(this.enemiesGroup[row][column].getyPos() + Constantes.ENEMY_Y_MOVE);
+                    }
                 }
             }
             this.goRight = true;
@@ -106,16 +116,25 @@ public class EnemiesGroup {
     }
 
     public void enemiesMove() {
+
+        if (this.deadEnemies[0] != -1) {
+            deleteDeadEnemies(deadEnemies);
+            deadEnemies[0] = -1;
+        }
         if(this.goRight) {
             for (int column = 0; column < 10; column++) {
                 for (int row = 0; row < 5; row++) {
-                    this.enemiesGroup[row][column].setxPos(this.enemiesGroup[row][column].getxPos() + Constantes.ENEMY_X_MOVE);
+                    if (this.enemiesGroup[row][column] != null) {
+                        this.enemiesGroup[row][column].setxPos(this.enemiesGroup[row][column].getxPos() + Constantes.ENEMY_X_MOVE);
+                    }
                 }
             }
         } else {
             for (int column = 0; column < 10; column++) {
                 for (int row = 0; row < 5; row++) {
-                    this.enemiesGroup[row][column].setxPos(this.enemiesGroup[row][column].getxPos() - Constantes.ENEMY_X_MOVE);
+                    if (this.enemiesGroup[row][column] != null) {
+                        this.enemiesGroup[row][column].setxPos(this.enemiesGroup[row][column].getxPos() - Constantes.ENEMY_X_MOVE);
+                    }
                 }
             }
         }
@@ -123,4 +142,25 @@ public class EnemiesGroup {
         this.isPosition1 = !this.isPosition1;
         this.enemiesTurnDown();
     }
+
+    public void fireTouchEnemy(SpaceshipFire spaceshipFire) {
+        for (int column = 0; column < 10; column++) {
+            for (int row = 0; row < 5; row++) {
+                if (this.enemiesGroup[row][column] != null) {
+                    if (spaceshipFire.hasKillEnemy(this.enemiesGroup[row][column])) {
+                        this.enemiesGroup[row][column].alive = false;
+                        spaceshipFire.yPos = -10;
+                        this.deadEnemies[0] = row;
+                        this.deadEnemies[1] = column;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    private void deleteDeadEnemies(int[] deadEnemies) {
+        this.enemiesGroup[deadEnemies[0]][deadEnemies[1]] = null;
+    }
+
 }

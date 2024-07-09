@@ -55,5 +55,8 @@ public class Scene extends JPanel {
         if (this.spaceshipFire.isFiring()) {
             this.spaceshipFire.drawSpaceshipFire(graphics2D);
         }
+
+        // detection kill enemy
+        this.enemiesGroup.fireTouchEnemy(this.spaceshipFire);
     }
 }

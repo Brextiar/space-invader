@@ -45,4 +45,11 @@ public class SpaceshipFire extends Entity {
     public void drawSpaceshipFire(Graphics graphics) {
         graphics.drawImage(this.image, this.xPos, this.fireMove(), null);
     }
+
+    public boolean hasKillEnemy(Enemy enemy) {
+        return this.yPos < enemy.getyPos() + enemy.getHeight()
+                && this.yPos + this.height > enemy.getyPos()
+                && this.xPos + this.width > enemy.getxPos()
+                && this.xPos < enemy.getxPos() + enemy.getWidth();
+    }
 }
