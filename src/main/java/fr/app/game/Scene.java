@@ -1,5 +1,6 @@
 package fr.app.game;
 
+import fr.app.entities.EnemiesGroup;
 import fr.app.entities.Spaceship;
 import fr.app.ressources.Chrono;
 import fr.app.ressources.Clavier;
@@ -13,6 +14,7 @@ public class Scene extends JPanel {
 /***** VARIABLES *****/
 
     public Spaceship spaceship = new Spaceship();
+    public EnemiesGroup enemiesGroup = new EnemiesGroup();
 
 /***** CONSTRUCTEUR *****/
     public Scene() {
@@ -44,5 +46,7 @@ public class Scene extends JPanel {
         // Affichage du vaisseau
         graphics2D.drawImage(this.spaceship.getImage(), this.spaceship.moveSpaceship(), this.spaceship.getyPos(), null);
 
+        // Affichage des ennemis
+        this.enemiesGroup.drawEnemies(graphics2D);
     }
 }

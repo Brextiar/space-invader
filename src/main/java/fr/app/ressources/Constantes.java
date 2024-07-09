@@ -24,4 +24,19 @@ public abstract class Constantes {
     public static final int SPACESHIP_LIMIT_LEFT = 60;
     public static final int SPACESHIP_LIMIT_RIGHT = 500;
 
+    /***** ENEMY *****/
+    // Enemy dimensions
+    public static final int ENEMY_WIDTH = 33;
+    public static final int ENEMY_HEIGHT = 25;
+
+    // Enemy initial position
+    public static final int ENEMY_INIT_YPOS = 120;
+    public static final int ENEMY_INIT_XPOS = 29 + SCREEN_MARGIN;
+    public static final int ENEMY_RAW_GAP = 40;
+    public static final int ENEMY_COL_GAP = 10;
+
+    // Enemy move
+    public static final int ENEMY_X_MOVE = 5;
+    public static final int ENEMY_Y_MOVE = 25;
+
 }
