@@ -12,7 +12,7 @@ public class EnemiesGroup {
     private boolean goRight, isPosition1;
     private int speed;
 
-    private int[] deadEnemies = {-1,-1};
+    private final int[] deadEnemies = {-1,-1};
 
     Random random = new Random();
 

@@ -5,6 +5,7 @@ import fr.app.ressources.Constantes;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class SpaceshipFire extends Entity {
 
@@ -20,7 +21,7 @@ public class SpaceshipFire extends Entity {
         super.strImg1 = "images/tirVaisseau.png";
         super.strImg2 = "";
         super.strImg3 = "";
-        super.icon = new ImageIcon(getClass().getClassLoader().getResource(super.strImg1));
+        super.icon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource(super.strImg1)));
         super.image = this.icon.getImage();
     }
 
@@ -94,8 +95,8 @@ public class SpaceshipFire extends Entity {
     public void spaceShipFireDestructCastle (Castle[] castles) {
         int[] touchingFirePosition = this.touchingFirePosition();
         if (touchingFirePosition[0] != -1) {
-            if (castles[touchingFirePosition[0]].findBrickFired(castles[touchingFirePosition[0]].findColFired(touchingFirePosition[1])) != -1) {
-                castles[touchingFirePosition[0]].castleDestruction(touchingFirePosition[1]);
+            if (castles[touchingFirePosition[0]].findBottomBrickFired(castles[touchingFirePosition[0]].findColFired(touchingFirePosition[1])) != -1) {
+                castles[touchingFirePosition[0]].bottomCastleDestruction(touchingFirePosition[1]);
                 this.yPos = -100;
             }
         }

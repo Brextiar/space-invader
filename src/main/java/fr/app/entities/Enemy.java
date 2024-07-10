@@ -3,6 +3,7 @@ package fr.app.entities;
 import fr.app.ressources.Constantes;
 
 import javax.swing.*;
+import java.util.Objects;
 
 public class Enemy  extends Entity {
 
@@ -24,12 +25,12 @@ public class Enemy  extends Entity {
     public void choiceImg(boolean isPosition1) {
         if (this.alive) {
             if (isPosition1) {
-                super.icon = new ImageIcon(getClass().getClassLoader().getResource(super.strImg1));
+                super.icon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource(super.strImg1)));
             } else {
-                super.icon = new ImageIcon(getClass().getClassLoader().getResource(super.strImg2));
+                super.icon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource(super.strImg2)));
             }
         } else {
-            super.icon = new ImageIcon(getClass().getClassLoader().getResource(super.strImg3));
+            super.icon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource(super.strImg3)));
         }
 
         super.image = this.icon.getImage();

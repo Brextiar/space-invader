@@ -4,6 +4,7 @@ import fr.app.ressources.Constantes;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class Spaceship extends Entity {
 
@@ -17,7 +18,7 @@ public class Spaceship extends Entity {
         super.strImg1 = "images/vaisseau.png";
         super.strImg2 = "images/vaisseauDetruit1.png";
         super.strImg3 = "images/vaisseauDetruit2.png";
-        super.icon = new ImageIcon(getClass().getClassLoader().getResource(super.strImg1));
+        super.icon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource(super.strImg1)));
         super.image = this.icon.getImage();
     }
 

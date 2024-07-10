@@ -72,22 +72,25 @@ public class Scene extends JPanel {
 
         // draw EnemiFires
         if (Chrono.turnCounter % 500 == 0) {
-            enemyFire1 = new EnemyFire(this.enemiesGroup.choiceFiringEnemy());
+            this.enemyFire1 = new EnemyFire(this.enemiesGroup.choiceFiringEnemy());
         }
-        if (enemyFire1 != null) {
-            enemyFire1.drawEnemyFire(graphics2D);
+        if (this.enemyFire1 != null) {
+            this.enemyFire1.drawEnemyFire(graphics2D);
+            this.enemyFire1.enemyFireDestructCastle(this.castles);
         }
         if (Chrono.turnCounter % 750 == 0) {
-            enemyFire2 = new EnemyFire(this.enemiesGroup.choiceFiringEnemy());
+            this.enemyFire2 = new EnemyFire(this.enemiesGroup.choiceFiringEnemy());
         }
-        if (enemyFire2 != null) {
-            enemyFire2.drawEnemyFire(graphics2D);
+        if (this.enemyFire2 != null) {
+            this.enemyFire2.drawEnemyFire(graphics2D);
+            this.enemyFire2.enemyFireDestructCastle(this.castles);
         }
         if (Chrono.turnCounter % 900 == 0) {
-            enemyFire3 = new EnemyFire(this.enemiesGroup.choiceFiringEnemy());
+            this.enemyFire3 = new EnemyFire(this.enemiesGroup.choiceFiringEnemy());
         }
-        if (enemyFire3 != null) {
-            enemyFire3.drawEnemyFire(graphics2D);
+        if (this.enemyFire3 != null) {
+            this.enemyFire3.drawEnemyFire(graphics2D);
+            this.enemyFire3.enemyFireDestructCastle(this.castles);
         }
     }
 }
