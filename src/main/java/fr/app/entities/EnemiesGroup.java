@@ -4,6 +4,7 @@ import fr.app.ressources.Chrono;
 import fr.app.ressources.Constantes;
 
 import java.awt.*;
+import java.util.Random;
 
 public class EnemiesGroup {
 
@@ -12,6 +13,10 @@ public class EnemiesGroup {
     private int speed;
 
     private int[] deadEnemies = {-1,-1};
+
+    Random random = new Random();
+
+    private int enemiesNbr = Constantes.TOTAL_ENEMIES;
 
     public EnemiesGroup() {
 
@@ -161,6 +166,23 @@ public class EnemiesGroup {
 
     private void deleteDeadEnemies(int[] deadEnemies) {
         this.enemiesGroup[deadEnemies[0]][deadEnemies[1]] = null;
+        this.enemiesNbr--;
     }
 
+    public int[] choiceFiringEnemy() {
+        int[] enemyXYPos = {-1, -1};
+        if (this.enemiesNbr != 0) {
+            do {
+                int col = random.nextInt(10);
+                for (int row = 4; row >= 0; row--) {
+                    if (this.enemiesGroup[row][col] != null) {
+                        enemyXYPos[0] = this.enemiesGroup[row][col].getxPos();
+                        enemyXYPos[1] = this.enemiesGroup[row][col].getyPos();
+                        break;
+                    }
+                }
+            } while (enemyXYPos[0] == -1);
+        }
+        return enemyXYPos;
+    }
 }

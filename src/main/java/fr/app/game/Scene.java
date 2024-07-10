@@ -1,9 +1,6 @@
 package fr.app.game;
 
-import fr.app.entities.Castle;
-import fr.app.entities.EnemiesGroup;
-import fr.app.entities.Spaceship;
-import fr.app.entities.SpaceshipFire;
+import fr.app.entities.*;
 import fr.app.ressources.Chrono;
 import fr.app.ressources.Clavier;
 import fr.app.ressources.Constantes;
@@ -19,7 +16,7 @@ public class Scene extends JPanel {
     public EnemiesGroup enemiesGroup = new EnemiesGroup();
     public SpaceshipFire spaceshipFire = new SpaceshipFire();
     public Castle[] castles = new Castle[4];
-
+    public EnemyFire enemyFire1, enemyFire2, enemyFire3;
 /***** CONSTRUCTEUR *****/
     public Scene() {
         super();
@@ -72,5 +69,25 @@ public class Scene extends JPanel {
 
         // détection contact SpaceshipFire avec Castle
         this.spaceshipFire.spaceShipFireDestructCastle(this.castles);
+
+        // draw EnemiFires
+        if (Chrono.turnCounter % 500 == 0) {
+            enemyFire1 = new EnemyFire(this.enemiesGroup.choiceFiringEnemy());
+        }
+        if (enemyFire1 != null) {
+            enemyFire1.drawEnemyFire(graphics2D);
+        }
+        if (Chrono.turnCounter % 750 == 0) {
+            enemyFire2 = new EnemyFire(this.enemiesGroup.choiceFiringEnemy());
+        }
+        if (enemyFire2 != null) {
+            enemyFire2.drawEnemyFire(graphics2D);
+        }
+        if (Chrono.turnCounter % 900 == 0) {
+            enemyFire3 = new EnemyFire(this.enemiesGroup.choiceFiringEnemy());
+        }
+        if (enemyFire3 != null) {
+            enemyFire3.drawEnemyFire(graphics2D);
+        }
     }
 }

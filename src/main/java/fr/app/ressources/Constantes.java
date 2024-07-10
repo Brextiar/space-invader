@@ -40,6 +40,9 @@ public abstract class Constantes {
     public static final int ENEMY_Y_MOVE = 20;
     public static final int ENEMY_SPEED = 1;
 
+    // Total number of enemies left
+    public static final int TOTAL_ENEMIES = 50;
+
     /***** Spaceship fire *****/
     public static final int SPACESHIP_FIRE_WIDTH = 3;
     public static final int SPACESHIP_FIRE_HEIGHT = 13;
@@ -55,4 +58,11 @@ public abstract class Constantes {
     public static final int CASTLE_POS_Y = 400;
     public static final int CASTLE_INIT_POS_X = 39;
     public static final int CASTLE_GAP = 42;
+
+    /***** EnemyFire ****/
+    // dimensions du tir
+    public static final int ENEMY_FIRE_WIDTH = 5;
+    public static final int ENEMY_FIRE_HEIGHT = 15;
+    // unité de déplacement
+    public static final int ENEMY_FIRE_Y_MOVE = 3;
 }
