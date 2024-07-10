@@ -18,14 +18,14 @@ public class Scene extends JPanel {
     public Spaceship spaceship = new Spaceship();
     public EnemiesGroup enemiesGroup = new EnemiesGroup();
     public SpaceshipFire spaceshipFire = new SpaceshipFire();
-    public Castle[] castle = new Castle[4];
+    public Castle[] castles = new Castle[4];
 
 /***** CONSTRUCTEUR *****/
     public Scene() {
         super();
 
         for (int col = 0; col < 4; col++) {
-            this.castle[col] = new Castle(Constantes.SCREEN_MARGIN + Constantes.CASTLE_INIT_POS_X + col * (Constantes.CASTLE_WIDTH + Constantes.CASTLE_GAP));
+            this.castles[col] = new Castle(Constantes.SCREEN_MARGIN + Constantes.CASTLE_INIT_POS_X + col * (Constantes.CASTLE_WIDTH + Constantes.CASTLE_GAP));
         }
 
         this.setFocusable(true);
@@ -66,8 +66,11 @@ public class Scene extends JPanel {
         this.enemiesGroup.fireTouchEnemy(this.spaceshipFire);
 
         //dessin des chateaux
-        for (Castle castle : this.castle) {
+        for (Castle castle : this.castles) {
             castle.drawCastle(graphics2D);
         }
+
+        // détection contact SpaceshipFire avec Castle
+        this.spaceshipFire.spaceShipFireDestructCastle(this.castles);
     }
 }

@@ -82,4 +82,32 @@ public class Castle extends Entity {
             }
         }
     }
+
+    public int findColFired(int xMissile) {
+        return (xMissile - this.xPos) / Constantes.BRICK_DIMENTION;
+    }
+
+    public int findBrickFired(int col) {
+        int row = ROW_NBR - 1;
+        while (row >= 0 && !this.castleArr[row][col]) {
+            row--;
+        }
+        return row;
+    }
+
+    private void deleteBrick(int row, int col) {
+        for (int counter = 0; counter < 6; counter++) {
+            if (row - counter >= 0) {
+                castleArr[row - counter][col] = false;
+                if (col < COL_NBR - 1) {
+                    castleArr[row - counter][col + 1] = false;
+                }
+            }
+        }
+    }
+
+    public void castleDestruction(int xMissile) {
+        int col = this.findColFired(xMissile);
+        this.deleteBrick(this.findBrickFired(col), col);
+    }
 }

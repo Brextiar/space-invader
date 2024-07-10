@@ -1,5 +1,6 @@
 package fr.app.entities;
 
+import fr.app.game.Main;
 import fr.app.ressources.Constantes;
 
 import javax.swing.*;
@@ -51,5 +52,52 @@ public class SpaceshipFire extends Entity {
                 && this.yPos + this.height > enemy.getyPos()
                 && this.xPos + this.width > enemy.getxPos()
                 && this.xPos < enemy.getxPos() + enemy.getWidth();
+    }
+
+    private boolean spaceshipFireIsInCastleHeigthRange() {
+        return this.yPos < Constantes.CASTLE_POS_Y + Constantes.CASTLE_HEIGHT
+                && this.yPos + this.height > Constantes.CASTLE_POS_Y;
+    }
+
+    private int findCastleFired() {
+        int castleNbr = -1;
+        int col = -1;
+        while (castleNbr == -1 && col < 4) {
+            col++;
+            if (this.xPos + this.width > Constantes.SCREEN_MARGIN + Constantes.CASTLE_INIT_POS_X + col * (Constantes.CASTLE_WIDTH + Constantes.CASTLE_GAP)
+                    && this.xPos < Constantes.SCREEN_MARGIN + Constantes.CASTLE_INIT_POS_X + Constantes.CASTLE_WIDTH + col * (Constantes.CASTLE_WIDTH + Constantes.CASTLE_GAP)) {
+                castleNbr = col;
+            }
+        }
+        return castleNbr;
+    }
+
+    public int xFireContactCastle(Castle castle) {
+        int xFireContactCastle = -1;
+        if (this.xPos + this.width > castle.getxPos() && this.xPos < castle.getxPos() + Constantes.CASTLE_WIDTH) {
+            xFireContactCastle = this.xPos;
+        }
+        return xFireContactCastle;
+    }
+
+    public int[] touchingFirePosition() {
+        int [] castleColFired = {-1, -1};
+        if (this.spaceshipFireIsInCastleHeigthRange()) {
+            castleColFired[0] = this.findCastleFired();
+            if (castleColFired[0] != -1) {
+                castleColFired[1] = this.xFireContactCastle(Main.scene.castles[castleColFired[0]]);
+            }
+        }
+        return castleColFired;
+    }
+
+    public void spaceShipFireDestructCastle (Castle[] castles) {
+        int[] touchingFirePosition = this.touchingFirePosition();
+        if (touchingFirePosition[0] != -1) {
+            if (castles[touchingFirePosition[0]].findBrickFired(castles[touchingFirePosition[0]].findColFired(touchingFirePosition[1])) != -1) {
+                castles[touchingFirePosition[0]].castleDestruction(touchingFirePosition[1]);
+                this.yPos = -100;
+            }
+        }
     }
 }
