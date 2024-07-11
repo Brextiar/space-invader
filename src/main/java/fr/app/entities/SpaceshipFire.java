@@ -2,6 +2,7 @@ package fr.app.entities;
 
 import fr.app.game.Main;
 import fr.app.ressources.Constantes;
+import fr.app.ressources.Sound;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,10 +50,16 @@ public class SpaceshipFire extends Entity {
     }
 
     public boolean hasKillEnemy(Enemy enemy) {
-        return this.yPos < enemy.getyPos() + enemy.getHeight()
+
+        if (this.yPos < enemy.getyPos() + enemy.getHeight()
                 && this.yPos + this.height > enemy.getyPos()
                 && this.xPos + this.width > enemy.getxPos()
-                && this.xPos < enemy.getxPos() + enemy.getWidth();
+                && this.xPos < enemy.getxPos() + enemy.getWidth()){
+            Sound.playSound("sounds/sonAlienMeurt.wav");
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private boolean spaceshipFireIsInCastleHeigthRange() {

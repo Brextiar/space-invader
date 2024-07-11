@@ -1,6 +1,7 @@
 package fr.app.entities;
 
 import fr.app.ressources.Constantes;
+import fr.app.ressources.Sound;
 
 import java.awt.*;
 
@@ -107,6 +108,7 @@ public class Castle extends Entity {
     }
 
     public void bottomCastleDestruction(int xMissile) {
+        Sound.playSound("sounds/sonCasseBrique.wav");
         int col = this.findColFired(xMissile);
         this.deleteBottomBrick(this.findBottomBrickFired(col), col);
     }
@@ -133,6 +135,7 @@ public class Castle extends Entity {
     }
 
     public void topCastleDestruction(int xFire) {
+        Sound.playSound("sounds/sonCasseBrique.wav");
         int col = this.findColFired(xFire);
         this.deleteTopBrick(this.findTopBrickFired(col), col);
     }

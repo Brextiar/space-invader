@@ -2,6 +2,7 @@ package fr.app.entities;
 
 import fr.app.ressources.Chrono;
 import fr.app.ressources.Constantes;
+import fr.app.ressources.Sound;
 
 import java.awt.*;
 import java.util.Random;
@@ -11,6 +12,7 @@ public class EnemiesGroup {
     private final Enemy[][] enemiesGroup = new Enemy[5][10];
     private boolean goRight, isPosition1;
     private int speed;
+    private int enemySoundCounter = 0;
 
     private final int[] deadEnemies = {-1,-1};
 
@@ -143,7 +145,8 @@ public class EnemiesGroup {
                 }
             }
         }
-
+        this.playEnemySound();
+        this.enemySoundCounter++;
         this.isPosition1 = !this.isPosition1;
         this.enemiesTurnDown();
     }
@@ -184,5 +187,18 @@ public class EnemiesGroup {
             } while (enemyXYPos[0] == -1);
         }
         return enemyXYPos;
+    }
+
+    private void playEnemySound() {
+        int counter = this.enemySoundCounter % 4;
+        if (counter == 0) {
+            Sound.playSound("sounds/sonAlien1.wav");
+        } else if (counter == 1) {
+            Sound.playSound("sounds/sonAlien2.wav");
+        } else if (counter == 2) {
+            Sound.playSound("sounds/sonAlien3.wav");
+        } else {
+            Sound.playSound("sounds/sonAlien4.wav");
+        }
     }
 }

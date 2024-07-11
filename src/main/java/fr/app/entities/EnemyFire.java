@@ -3,6 +3,7 @@ package fr.app.entities;
 import fr.app.game.Main;
 import fr.app.ressources.Chrono;
 import fr.app.ressources.Constantes;
+import fr.app.ressources.Sound;
 
 import javax.swing.*;
 import java.awt.*;
@@ -99,6 +100,7 @@ public class EnemyFire extends Entity {
                 && this.xPos + this.width > spaceship.getxPos()
                 && this.xPos < spaceship.getxPos() + spaceship.getWidth()) {
             this.yPos = 700;
+            Sound.playSound("sounds/sonDestructionVaisseau.wav");
             return true;
         }
         return false;

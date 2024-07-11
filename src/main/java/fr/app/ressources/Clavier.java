@@ -20,6 +20,7 @@ public class Clavier implements KeyListener {
                 Main.scene.spaceship.setxMove(-Constantes.SPACESHIP_X_MOVE);
             } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                 if (!Main.scene.spaceshipFire.isFiring()) {
+                    Sound.playSound("sounds/sonTirVaisseau.wav");
                     Main.scene.spaceshipFire.setyPos(Constantes.SPACESHIP_Y_POS - Constantes.SPACESHIP_FIRE_HEIGHT);
                     Main.scene.spaceshipFire.setxPos(Main.scene.spaceship.getxPos() + (Constantes.SPACESHIP_WIDTH / 2) - 1);
                     Main.scene.spaceshipFire.setFiring(true);
