@@ -92,4 +92,15 @@ public class EnemyFire extends Entity {
             }
         }
     }
+
+    public boolean spaceshipTouching(Spaceship spaceship) {
+        if (this.yPos < spaceship.getyPos() + spaceship.getHeight()
+                && this.yPos + this.height > spaceship.getyPos()
+                && this.xPos + this.width > spaceship.getxPos()
+                && this.xPos < spaceship.getxPos() + spaceship.getWidth()) {
+            this.yPos = 700;
+            return true;
+        }
+        return false;
+    }
 }

@@ -1,12 +1,16 @@
 package fr.app.entities;
 
+import fr.app.ressources.Chrono;
 import fr.app.ressources.Constantes;
+import fr.app.game.Main;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
 public class Spaceship extends Entity {
+
+    private int counter = 0;
 
     public Spaceship() {
         super.xPos = Constantes.SPACESHIP_X_POS;
@@ -20,6 +24,7 @@ public class Spaceship extends Entity {
         super.strImg3 = "images/vaisseauDetruit2.png";
         super.icon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource(super.strImg1)));
         super.image = this.icon.getImage();
+        super.alive = true;
     }
 
     public int moveSpaceship() {
@@ -36,6 +41,23 @@ public class Spaceship extends Entity {
     }
 
     public void drawSpaceship(Graphics graphics) {
+        if (!this.alive) {
+            this.destructionOfSpaceship();
+        }
         graphics.drawImage(this.image, this.moveSpaceship(), this.yPos, null);
+    }
+
+    public void destructionOfSpaceship() {
+        if (counter < 300) {
+            if (Chrono.turnCounter % 2 == 0) {
+                super.icon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource(super.strImg2)));
+            } else {
+                super.icon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource(super.strImg3)));
+            }
+            counter++;
+        } else {
+            Main.game = false;
+        }
+        super.image = this.icon.getImage();
     }
 }

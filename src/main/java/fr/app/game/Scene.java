@@ -77,6 +77,9 @@ public class Scene extends JPanel {
         if (this.enemyFire1 != null) {
             this.enemyFire1.drawEnemyFire(graphics2D);
             this.enemyFire1.enemyFireDestructCastle(this.castles);
+            if(this.enemyFire1.spaceshipTouching(this.spaceship)) {
+                this.spaceship.setAlive(false);
+            }
         }
         if (Chrono.turnCounter % 750 == 0) {
             this.enemyFire2 = new EnemyFire(this.enemiesGroup.choiceFiringEnemy());
@@ -84,6 +87,9 @@ public class Scene extends JPanel {
         if (this.enemyFire2 != null) {
             this.enemyFire2.drawEnemyFire(graphics2D);
             this.enemyFire2.enemyFireDestructCastle(this.castles);
+            if(this.enemyFire2.spaceshipTouching(this.spaceship)) {
+                this.spaceship.setAlive(false);
+            }
         }
         if (Chrono.turnCounter % 900 == 0) {
             this.enemyFire3 = new EnemyFire(this.enemiesGroup.choiceFiringEnemy());
@@ -91,6 +97,9 @@ public class Scene extends JPanel {
         if (this.enemyFire3 != null) {
             this.enemyFire3.drawEnemyFire(graphics2D);
             this.enemyFire3.enemyFireDestructCastle(this.castles);
+            if(this.enemyFire3.spaceshipTouching(this.spaceship)) {
+                this.spaceship.setAlive(false);
+            }
         }
     }
 }

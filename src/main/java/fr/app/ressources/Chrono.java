@@ -11,7 +11,7 @@ public class Chrono implements Runnable {
 
     /***** METHODES *****/
     public void run() {
-        while (true) {
+        while (Main.game) {
             turnCounter++;
             Main.scene.repaint();
             try {
