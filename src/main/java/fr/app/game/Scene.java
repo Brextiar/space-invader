@@ -19,6 +19,11 @@ public class Scene extends JPanel {
     public EnemyFire enemyFire1, enemyFire2, enemyFire3;
     public Ovni ovni;
 
+    private Font scoreFont = new Font("JetBrains Mono", Font.PLAIN, 20);
+    private Font textFont = new Font("JetBrains Mono", Font.PLAIN, 80);
+
+    public int score = 0;
+
     /***** CONSTRUCTEUR *****/
     public Scene() {
         super();
@@ -50,6 +55,10 @@ public class Scene extends JPanel {
         graphics2D.setColor(Color.GREEN);
         graphics2D.fillRect(30, 530, 535, 5);
 
+        //affichage du score
+        graphics2D.setFont(this.scoreFont);
+        graphics2D.drawString("SCORE : " + score, 400, 25);
+
         // Affichage du vaisseau
         this.spaceship.drawSpaceship(graphics2D);
 
@@ -60,6 +69,13 @@ public class Scene extends JPanel {
 
         // Affichage des ennemis
         this.enemiesGroup.drawEnemies(graphics2D);
+
+        // message début du jeu
+        if (Chrono.turnCounter < 500) {
+            graphics2D.setFont(this.textFont);
+            graphics2D.setColor(Color.RED);
+            graphics2D.drawString("Good luck !", 35, 100);
+        }
 
         //affichage du tir
         if (this.spaceshipFire.isFiring()) {
@@ -109,6 +125,9 @@ public class Scene extends JPanel {
         if (this.ovni != null) {
             if (this.ovni.getxPos() > 0) {
                 if (this.spaceshipFire.destroyOvni(this.ovni)) {
+                    if (this.ovni.getxMove() != 0){
+                        this.score += Constantes.OVNI_POINT;
+                    }
                     this.ovni.setxMove(0);
                     this.ovni.setAlive(false);
                     this.ovni.soundOvni.stop();
@@ -118,6 +137,17 @@ public class Scene extends JPanel {
             } else {
                 this.ovni = null;
             }
+        }
+
+        // affichage message fin du jeu
+        if (!this.spaceship.isAlive()) {
+
+            graphics2D.setFont(this.textFont);
+            graphics2D.setColor(Color.RED);
+            graphics2D.drawString("GAME OVER", 35, 200);
+            graphics2D.drawString("SCORE : " + score, 35, 280);
+            graphics2D.setFont(this.scoreFont);
+            graphics2D.drawString("PRESS ENTER TO RESTART", 150, 350);
         }
     }
 }

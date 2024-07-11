@@ -1,5 +1,6 @@
 package fr.app.entities;
 
+import fr.app.game.Main;
 import fr.app.ressources.Chrono;
 import fr.app.ressources.Constantes;
 import fr.app.ressources.Sound;
@@ -160,6 +161,13 @@ public class EnemiesGroup {
                         spaceshipFire.yPos = -10;
                         this.deadEnemies[0] = row;
                         this.deadEnemies[1] = column;
+                        if (row == 0) {
+                            Main.scene.score += Constantes.TOP_ENEMY_POINT;
+                        } else if (row > 0 && row < 3) {
+                            Main.scene.score += Constantes.MIDDLE_ENEMY_POINT;
+                        } else {
+                            Main.scene.score += Constantes.BOTTOM_ENEMY_POINT;
+                        }
                         break;
                     }
                 }

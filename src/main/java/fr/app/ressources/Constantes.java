@@ -72,4 +72,10 @@ public abstract class Constantes {
     public static final int OVNI_X_MOVE = 1;
     public static final int OVNI_Y_POSITION = 50;
     public static final int OVNI_INIT_X_POSITION = SCREEN_WIDTH;
+
+    /***** Score *****/
+    public static int TOP_ENEMY_POINT = 50;
+    public static int MIDDLE_ENEMY_POINT = 40;
+    public static int BOTTOM_ENEMY_POINT = 20;
+    public static int OVNI_POINT = 100;
 }
