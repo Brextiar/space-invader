@@ -108,4 +108,17 @@ public class SpaceshipFire extends Entity {
             }
         }
     }
+
+    public boolean destroyOvni(Ovni ovni) {
+        if (this.yPos < ovni.getyPos() + ovni.getHeight()
+                && this.yPos + this.height > ovni.getyPos()
+                && this.xPos + this.width > ovni.getxPos()
+                && this.xPos < ovni.getxPos() + ovni.getWidth()) {
+            Sound.playSound("sounds/sonDestructionSoucoupe.wav");
+            this.isFiring = false;
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

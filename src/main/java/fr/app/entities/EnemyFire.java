@@ -105,4 +105,6 @@ public class EnemyFire extends Entity {
         }
         return false;
     }
+
+
 }

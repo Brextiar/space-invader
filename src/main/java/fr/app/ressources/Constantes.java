@@ -65,4 +65,11 @@ public abstract class Constantes {
     public static final int ENEMY_FIRE_HEIGHT = 15;
     // unité de déplacement
     public static final int ENEMY_FIRE_Y_MOVE = 3;
+
+    /***** OVNI *****/
+    public static final int OVNI_WIDTH = 42;
+    public static final int OVNI_HEIGHT = 22;
+    public static final int OVNI_X_MOVE = 1;
+    public static final int OVNI_Y_POSITION = 50;
+    public static final int OVNI_INIT_X_POSITION = SCREEN_WIDTH;
 }

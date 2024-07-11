@@ -10,14 +10,16 @@ import java.awt.*;
 import javax.swing.*;
 
 public class Scene extends JPanel {
-/***** VARIABLES *****/
+    /***** VARIABLES *****/
 
     public Spaceship spaceship = new Spaceship();
     public EnemiesGroup enemiesGroup = new EnemiesGroup();
     public SpaceshipFire spaceshipFire = new SpaceshipFire();
     public Castle[] castles = new Castle[4];
     public EnemyFire enemyFire1, enemyFire2, enemyFire3;
-/***** CONSTRUCTEUR *****/
+    public Ovni ovni;
+
+    /***** CONSTRUCTEUR *****/
     public Scene() {
         super();
 
@@ -34,7 +36,7 @@ public class Scene extends JPanel {
 
     }
 
-/***** METHODES *****/
+    /***** METHODES *****/
 
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
@@ -51,6 +53,11 @@ public class Scene extends JPanel {
         // Affichage du vaisseau
         this.spaceship.drawSpaceship(graphics2D);
 
+        //dessin des chateaux
+        for (Castle castle : this.castles) {
+            castle.drawCastle(graphics2D);
+        }
+
         // Affichage des ennemis
         this.enemiesGroup.drawEnemies(graphics2D);
 
@@ -62,11 +69,6 @@ public class Scene extends JPanel {
         // detection kill enemy
         this.enemiesGroup.fireTouchEnemy(this.spaceshipFire);
 
-        //dessin des chateaux
-        for (Castle castle : this.castles) {
-            castle.drawCastle(graphics2D);
-        }
-
         // détection contact SpaceshipFire avec Castle
         this.spaceshipFire.spaceShipFireDestructCastle(this.castles);
 
@@ -77,7 +79,7 @@ public class Scene extends JPanel {
         if (this.enemyFire1 != null) {
             this.enemyFire1.drawEnemyFire(graphics2D);
             this.enemyFire1.enemyFireDestructCastle(this.castles);
-            if(this.enemyFire1.spaceshipTouching(this.spaceship)) {
+            if (this.enemyFire1.spaceshipTouching(this.spaceship)) {
                 this.spaceship.setAlive(false);
             }
         }
@@ -87,7 +89,7 @@ public class Scene extends JPanel {
         if (this.enemyFire2 != null) {
             this.enemyFire2.drawEnemyFire(graphics2D);
             this.enemyFire2.enemyFireDestructCastle(this.castles);
-            if(this.enemyFire2.spaceshipTouching(this.spaceship)) {
+            if (this.enemyFire2.spaceshipTouching(this.spaceship)) {
                 this.spaceship.setAlive(false);
             }
         }
@@ -97,8 +99,24 @@ public class Scene extends JPanel {
         if (this.enemyFire3 != null) {
             this.enemyFire3.drawEnemyFire(graphics2D);
             this.enemyFire3.enemyFireDestructCastle(this.castles);
-            if(this.enemyFire3.spaceshipTouching(this.spaceship)) {
+            if (this.enemyFire3.spaceshipTouching(this.spaceship)) {
                 this.spaceship.setAlive(false);
+            }
+        }
+        if (Chrono.turnCounter % 2500 == 0) {
+            ovni = new Ovni();
+        }
+        if (this.ovni != null) {
+            if (this.ovni.getxPos() > 0) {
+                if (this.spaceshipFire.destroyOvni(this.ovni)) {
+                    this.ovni.setxMove(0);
+                    this.ovni.setAlive(false);
+                    this.ovni.soundOvni.stop();
+                    this.ovni.soundDestroyedOvni.play();
+                }
+                this.ovni.drawOvni(graphics2D);
+            } else {
+                this.ovni = null;
             }
         }
     }
