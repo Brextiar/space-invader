@@ -2,7 +2,7 @@ package fr.app.entities;
 
 import fr.app.game.Main;
 import fr.app.ressources.Chrono;
-import fr.app.ressources.Constantes;
+import fr.app.ressources.GameConfig;
 import fr.app.ressources.Sound;
 
 import java.awt.*;
@@ -19,41 +19,51 @@ public class EnemiesGroup {
 
     Random random = new Random();
 
-    private int enemiesNbr = Constantes.TOTAL_ENEMIES;
+    private int enemiesNbr = GameConfig.TOTAL_ENEMIES;
 
+    /**
+     * Constructor
+     */
     public EnemiesGroup() {
 
         this.enemiesGroupInit();
         this.goRight = true;
         this.isPosition1 = true;
-        this.speed = Constantes.ENEMY_SPEED;
+        this.speed = GameConfig.ENEMY_SPEED;
     }
 
+    /**
+     * Initialize the enemies
+     */
     private void enemiesGroupInit() {
 
         for (int column = 0; column < 10; column++) {
             this.enemiesGroup[0][column] = new Enemy(
-                    Constantes.ENEMY_INIT_X_POS + (Constantes.ENEMY_WIDTH + Constantes.ENEMY_COL_GAP) * column,
-                    Constantes.ENEMY_INIT_Y_POS,
+                    GameConfig.ENEMY_INIT_X_POS + (GameConfig.ENEMY_WIDTH + GameConfig.ENEMY_COL_GAP) * column,
+                    GameConfig.ENEMY_INIT_Y_POS,
                     "images/alienHaut1.png",
                     "images/alienHaut2.png");
             for (int row = 1; row < 3; row++) {
                 this.enemiesGroup[row][column] = new Enemy(
-                        Constantes.ENEMY_INIT_X_POS + (Constantes.ENEMY_WIDTH + Constantes.ENEMY_COL_GAP) * column,
-                        Constantes.ENEMY_INIT_Y_POS + Constantes.ENEMY_RAW_GAP * row,
+                        GameConfig.ENEMY_INIT_X_POS + (GameConfig.ENEMY_WIDTH + GameConfig.ENEMY_COL_GAP) * column,
+                        GameConfig.ENEMY_INIT_Y_POS + GameConfig.ENEMY_RAW_GAP * row,
                         "images/alienMilieu1.png",
                         "images/alienMilieu2.png");
             }
             for (int row = 3; row < 5; row++) {
                 this.enemiesGroup[row][column] = new Enemy(
-                        Constantes.ENEMY_INIT_X_POS + (Constantes.ENEMY_WIDTH + Constantes.ENEMY_COL_GAP) * column,
-                        Constantes.ENEMY_INIT_Y_POS + Constantes.ENEMY_RAW_GAP * row,
+                        GameConfig.ENEMY_INIT_X_POS + (GameConfig.ENEMY_WIDTH + GameConfig.ENEMY_COL_GAP) * column,
+                        GameConfig.ENEMY_INIT_Y_POS + GameConfig.ENEMY_RAW_GAP * row,
                         "images/alienBas1.png",
                         "images/alienBas2.png");
             }
         }
     }
 
+    /**
+     * Display enemies on the screen
+     * @param graphics the <code>Graphics</code> object to protect
+     */
     public void drawEnemies(Graphics graphics) {
 
         if (Chrono.turnCounter % (100 - 10 * this.speed) == 0) {
@@ -69,11 +79,15 @@ public class EnemiesGroup {
         }
     }
 
+    /**
+     *
+     * @return true if the left border is reached
+     */
     public boolean isLeftBorderReached() {
         for (int column = 0; column < 10; column++) {
             for (int row = 0; row < 5; row++) {
                 if (this.enemiesGroup[row][column] != null) {
-                    if (this.enemiesGroup[row][column].getxPos() < Constantes.SCREEN_MARGIN) {
+                    if (this.enemiesGroup[row][column].getxPos() < GameConfig.SCREEN_MARGIN) {
                         return true;
                     }
                 }
@@ -82,11 +96,15 @@ public class EnemiesGroup {
         return false;
     }
 
+    /**
+     *
+     * @return true if the right border is reached
+     */
     public boolean isRightBorderReached() {
         for (int column = 0; column < 10; column++) {
             for (int row = 0; row < 5; row++) {
                 if (this.enemiesGroup[row][column] != null) {
-                    if (this.enemiesGroup[row][column].getxPos() + this.enemiesGroup[row][column].getWidth() > Constantes.SCREEN_WIDTH - Constantes.SCREEN_MARGIN) {
+                    if (this.enemiesGroup[row][column].getxPos() + this.enemiesGroup[row][column].getWidth() > GameConfig.SCREEN_WIDTH - GameConfig.SCREEN_MARGIN) {
                         return true;
                     }
                 }
@@ -95,12 +113,15 @@ public class EnemiesGroup {
         return false;
     }
 
+    /**
+     * moves enemies down one level, reverses enemy direction, increases enemy speed
+     */
     public void enemiesTurnDown() {
         if(isRightBorderReached()) {
             for (int column = 0; column < 10; column++) {
                 for (int row = 0; row < 5; row++) {
                     if (this.enemiesGroup[row][column] != null) {
-                        this.enemiesGroup[row][column].setyPos(this.enemiesGroup[row][column].getyPos() + Constantes.ENEMY_Y_MOVE);
+                        this.enemiesGroup[row][column].setyPos(this.enemiesGroup[row][column].getyPos() + GameConfig.ENEMY_Y_MOVE);
                     }
                 }
             }
@@ -112,7 +133,7 @@ public class EnemiesGroup {
             for (int column = 0; column < 10; column++) {
                 for (int row = 0; row < 5; row++) {
                     if (this.enemiesGroup[row][column] != null) {
-                        this.enemiesGroup[row][column].setyPos(this.enemiesGroup[row][column].getyPos() + Constantes.ENEMY_Y_MOVE);
+                        this.enemiesGroup[row][column].setyPos(this.enemiesGroup[row][column].getyPos() + GameConfig.ENEMY_Y_MOVE);
                     }
                 }
             }
@@ -123,6 +144,9 @@ public class EnemiesGroup {
         }
     }
 
+    /**
+     * move enemies on x axis
+     */
     public void enemiesMove() {
 
         if (this.deadEnemies[0] != -1) {
@@ -133,7 +157,7 @@ public class EnemiesGroup {
             for (int column = 0; column < 10; column++) {
                 for (int row = 0; row < 5; row++) {
                     if (this.enemiesGroup[row][column] != null) {
-                        this.enemiesGroup[row][column].setxPos(this.enemiesGroup[row][column].getxPos() + Constantes.ENEMY_X_MOVE);
+                        this.enemiesGroup[row][column].setxPos(this.enemiesGroup[row][column].getxPos() + GameConfig.ENEMY_X_MOVE);
                     }
                 }
             }
@@ -141,7 +165,7 @@ public class EnemiesGroup {
             for (int column = 0; column < 10; column++) {
                 for (int row = 0; row < 5; row++) {
                     if (this.enemiesGroup[row][column] != null) {
-                        this.enemiesGroup[row][column].setxPos(this.enemiesGroup[row][column].getxPos() - Constantes.ENEMY_X_MOVE);
+                        this.enemiesGroup[row][column].setxPos(this.enemiesGroup[row][column].getxPos() - GameConfig.ENEMY_X_MOVE);
                     }
                 }
             }
@@ -152,6 +176,10 @@ public class EnemiesGroup {
         this.enemiesTurnDown();
     }
 
+    /**
+     * Delete an enemy if touched by spaceship
+     * @param spaceshipFire the spaceshipFire
+     */
     public void fireTouchEnemy(SpaceshipFire spaceshipFire) {
         for (int column = 0; column < 10; column++) {
             for (int row = 0; row < 5; row++) {
@@ -162,11 +190,11 @@ public class EnemiesGroup {
                         this.deadEnemies[0] = row;
                         this.deadEnemies[1] = column;
                         if (row == 0) {
-                            Main.scene.score += Constantes.TOP_ENEMY_POINT;
-                        } else if (row > 0 && row < 3) {
-                            Main.scene.score += Constantes.MIDDLE_ENEMY_POINT;
+                            Main.scene.score += GameConfig.TOP_ENEMY_POINT;
+                        } else if (row < 3) {
+                            Main.scene.score += GameConfig.MIDDLE_ENEMY_POINT;
                         } else {
-                            Main.scene.score += Constantes.BOTTOM_ENEMY_POINT;
+                            Main.scene.score += GameConfig.BOTTOM_ENEMY_POINT;
                         }
                         break;
                     }
@@ -175,11 +203,19 @@ public class EnemiesGroup {
         }
     }
 
+    /**
+     * Delete an enemy
+     * @param deadEnemies the enemy to delete
+     */
     private void deleteDeadEnemies(int[] deadEnemies) {
         this.enemiesGroup[deadEnemies[0]][deadEnemies[1]] = null;
         this.enemiesNbr--;
     }
 
+    /**
+     * Used to choose an enemy which will fire
+     * @return the enemy which will fire
+     */
     public int[] choiceFiringEnemy() {
         int[] enemyXYPos = {-1, -1};
         if (this.enemiesNbr != 0) {
@@ -197,6 +233,9 @@ public class EnemiesGroup {
         return enemyXYPos;
     }
 
+    /**
+     * Play an enemy sound when enemies are moving
+     */
     private void playEnemySound() {
         int counter = this.enemySoundCounter % 4;
         if (counter == 0) {
@@ -208,5 +247,33 @@ public class EnemiesGroup {
         } else {
             Sound.playSound("sounds/sonAlien4.wav");
         }
+    }
+
+    /**
+     *
+     * @return the number of enemies
+     */
+    public int getEnemiesNbr() {
+        return this.enemiesNbr;
+    }
+
+    /**
+     *
+     * @return the position of the lowest enemy
+     */
+    public int lowestEnemyPosition() {
+        int lowestPosition = 0, finalLowestPosition = 0;
+        for (int column = 0; column < 10; column++) {
+            for (int row = 4; row >= 0; row--) {
+                if (this.enemiesGroup[row][column] != null) {
+                    lowestPosition = this.enemiesGroup[row][column].getyPos() + this.enemiesGroup[row][column].getHeight();
+                    break;
+                }
+            }
+            if (lowestPosition > finalLowestPosition) {
+                finalLowestPosition = lowestPosition;
+            }
+        }
+        return finalLowestPosition;
     }
 }

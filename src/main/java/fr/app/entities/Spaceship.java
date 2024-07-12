@@ -1,7 +1,7 @@
 package fr.app.entities;
 
 import fr.app.ressources.Chrono;
-import fr.app.ressources.Constantes;
+import fr.app.ressources.GameConfig;
 import fr.app.game.Main;
 
 import javax.swing.*;
@@ -12,11 +12,14 @@ public class Spaceship extends Entity {
 
     private int counter = 0;
 
+    /**
+     * Constructor
+     */
     public Spaceship() {
-        super.xPos = Constantes.SPACESHIP_X_POS;
-        super.yPos = Constantes.SPACESHIP_Y_POS;
-        super.width = Constantes.SPACESHIP_WIDTH;
-        super.height = Constantes.SPACESHIP_HEIGHT;
+        super.xPos = GameConfig.SPACESHIP_X_POS;
+        super.yPos = GameConfig.SPACESHIP_Y_POS;
+        super.width = GameConfig.SPACESHIP_WIDTH;
+        super.height = GameConfig.SPACESHIP_HEIGHT;
         super.xMove = 0;
         super.yMove = 0;
         super.strImg1 = "images/vaisseau.png";
@@ -27,19 +30,27 @@ public class Spaceship extends Entity {
         super.alive = true;
     }
 
+    /**
+     *
+     * @return the new x position of the spaceship
+     */
     public int moveSpaceship() {
         if (this.xMove < 0) {
-            if (this.xPos > Constantes.SPACESHIP_LIMIT_LEFT){
+            if (this.xPos > GameConfig.SPACESHIP_LIMIT_LEFT){
                 this.xPos = this.xPos + this.xMove;
             }
         } else if (this.xMove > 0) {
-            if (this.xPos + this.xMove < Constantes.SPACESHIP_LIMIT_RIGHT){
+            if (this.xPos + this.xMove < GameConfig.SPACESHIP_LIMIT_RIGHT){
                 this.xPos = this.xPos + this.xMove;
             }
         }
         return this.xPos;
     }
 
+    /**
+     * Display the spaceship on the screen
+     * @param graphics the graphics object
+     */
     public void drawSpaceship(Graphics graphics) {
         if (!this.alive) {
             this.destructionOfSpaceship();
@@ -47,6 +58,9 @@ public class Spaceship extends Entity {
         graphics.drawImage(this.image, this.moveSpaceship(), this.yPos, null);
     }
 
+    /**
+     * Delete the spaceship when it is destroyed
+     */
     public void destructionOfSpaceship() {
         if (counter < 300) {
             if (Chrono.turnCounter % 2 == 0) {

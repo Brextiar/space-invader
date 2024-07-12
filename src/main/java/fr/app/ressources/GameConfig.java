@@ -1,6 +1,9 @@
 package fr.app.ressources;
 
-public abstract class Constantes {
+public abstract class GameConfig {
+
+    /***** CHRONO *****/
+    public static final int PAUSE = 5;
 
     /***** SCREEN *****/
     // Screen dimensions
@@ -49,21 +52,21 @@ public abstract class Constantes {
     public static final int SPACESHIP_FIRE_Y_MOVE = 2;
 
     /***** CASTLE *****/
-    //dimension d'une brique
+    //Brick dimension
     public static final int BRICK_DIMENTION = 2;
-    // dimension du chateau (multiple d'une brique)
+    // castle dimension
     public static final int CASTLE_WIDTH = 72;
     public static final int CASTLE_HEIGHT = 54;
-    // position des chateaux
+    // castle position
     public static final int CASTLE_POS_Y = 400;
     public static final int CASTLE_INIT_POS_X = 39;
     public static final int CASTLE_GAP = 42;
 
     /***** EnemyFire ****/
-    // dimensions du tir
+    // fire dimension
     public static final int ENEMY_FIRE_WIDTH = 5;
     public static final int ENEMY_FIRE_HEIGHT = 15;
-    // unité de déplacement
+    // fire move
     public static final int ENEMY_FIRE_Y_MOVE = 3;
 
     /***** OVNI *****/

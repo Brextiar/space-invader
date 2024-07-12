@@ -2,15 +2,14 @@ package fr.app.game;
 
 import fr.app.entities.*;
 import fr.app.ressources.Chrono;
-import fr.app.ressources.Clavier;
-import fr.app.ressources.Constantes;
+import fr.app.ressources.Keyboard;
+import fr.app.ressources.GameConfig;
 
 import java.awt.*;
 
 import javax.swing.*;
 
 public class Scene extends JPanel {
-    /***** VARIABLES *****/
 
     public Spaceship spaceship = new Spaceship();
     public EnemiesGroup enemiesGroup = new EnemiesGroup();
@@ -19,76 +18,80 @@ public class Scene extends JPanel {
     public EnemyFire enemyFire1, enemyFire2, enemyFire3;
     public Ovni ovni;
 
-    private Font scoreFont = new Font("JetBrains Mono", Font.PLAIN, 20);
-    private Font textFont = new Font("JetBrains Mono", Font.PLAIN, 80);
+    private final Font scoreFont = new Font("JetBrains Mono", Font.PLAIN, 15);
+    private final Font textFont = new Font("JetBrains Mono", Font.PLAIN, 60);
 
     public int score = 0;
 
-    /***** CONSTRUCTEUR *****/
+    /**
+     * Constructor
+     */
     public Scene() {
         super();
 
         for (int col = 0; col < 4; col++) {
-            this.castles[col] = new Castle(Constantes.SCREEN_MARGIN + Constantes.CASTLE_INIT_POS_X + col * (Constantes.CASTLE_WIDTH + Constantes.CASTLE_GAP));
+            this.castles[col] = new Castle(GameConfig.SCREEN_MARGIN + GameConfig.CASTLE_INIT_POS_X + col * (GameConfig.CASTLE_WIDTH + GameConfig.CASTLE_GAP));
         }
 
         this.setFocusable(true);
         this.requestFocusInWindow();
-        this.addKeyListener(new Clavier());
+        this.addKeyListener(new Keyboard());
 
         Thread screenChrono = new Thread(new Chrono());
         screenChrono.start();
 
     }
 
-    /***** METHODES *****/
-
+    /**
+     *
+     * @param graphics the <code>Graphics</code> object to protect
+     */
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         Graphics graphics2D = (Graphics2D) graphics;
 
-        // Dessin du fond
+        // Background
         graphics2D.setColor(Color.BLACK);
-        graphics2D.fillRect(0, 0, Constantes.SCREEN_WIDTH, Constantes.SCREEN_HEIGHT);
+        graphics2D.fillRect(0, 0, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 
-        // Dessin ligne verte bas d'écran
+        // draw the flore
         graphics2D.setColor(Color.GREEN);
         graphics2D.fillRect(30, 530, 535, 5);
 
-        //affichage du score
+        //display score
         graphics2D.setFont(this.scoreFont);
         graphics2D.drawString("SCORE : " + score, 400, 25);
 
-        // Affichage du vaisseau
+        // draw spaceship
         this.spaceship.drawSpaceship(graphics2D);
 
-        //dessin des chateaux
+        //draw castle
         for (Castle castle : this.castles) {
             castle.drawCastle(graphics2D);
         }
 
-        // Affichage des ennemis
+        // draw enemies
         this.enemiesGroup.drawEnemies(graphics2D);
 
-        // message début du jeu
+        // start game's message
         if (Chrono.turnCounter < 500) {
             graphics2D.setFont(this.textFont);
             graphics2D.setColor(Color.RED);
-            graphics2D.drawString("Good luck !", 35, 100);
+            graphics2D.drawString("Good luck !", 105, 100);
         }
 
-        //affichage du tir
+        // draw SpaceshipFire
         if (this.spaceshipFire.isFiring()) {
             this.spaceshipFire.drawSpaceshipFire(graphics2D);
         }
 
-        // detection kill enemy
+        // enemy kill detection
         this.enemiesGroup.fireTouchEnemy(this.spaceshipFire);
 
-        // détection contact SpaceshipFire avec Castle
+        // spaceship fire destruct castle
         this.spaceshipFire.spaceShipFireDestructCastle(this.castles);
 
-        // draw EnemiFires
+        // draw EnemiesFires
         if (Chrono.turnCounter % 500 == 0) {
             this.enemyFire1 = new EnemyFire(this.enemiesGroup.choiceFiringEnemy());
         }
@@ -126,7 +129,7 @@ public class Scene extends JPanel {
             if (this.ovni.getxPos() > 0) {
                 if (this.spaceshipFire.destroyOvni(this.ovni)) {
                     if (this.ovni.getxMove() != 0){
-                        this.score += Constantes.OVNI_POINT;
+                        this.score += GameConfig.OVNI_POINT;
                     }
                     this.ovni.setxMove(0);
                     this.ovni.setAlive(false);
@@ -139,15 +142,24 @@ public class Scene extends JPanel {
             }
         }
 
-        // affichage message fin du jeu
+        // end game's messages
         if (!this.spaceship.isAlive()) {
-
             graphics2D.setFont(this.textFont);
             graphics2D.setColor(Color.RED);
             graphics2D.drawString("GAME OVER", 35, 200);
             graphics2D.drawString("SCORE : " + score, 35, 280);
             graphics2D.setFont(this.scoreFont);
             graphics2D.drawString("PRESS ENTER TO RESTART", 150, 350);
+        }
+
+        //add new enemies when all enemies are destroyed
+        if (this.enemiesGroup.getEnemiesNbr() == 0) {
+            enemiesGroup = new EnemiesGroup();
+        }
+
+        // collisiton enemies with spaceship
+        if (this.enemiesGroup.lowestEnemyPosition() > GameConfig.SPACESHIP_Y_POS) {
+            this.spaceship.destructionOfSpaceship();
         }
     }
 }

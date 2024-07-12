@@ -5,16 +5,11 @@ import java.awt.*;
 
 public abstract class Entity {
 
-    /***** ATRIBUTS *****/
-
     protected int width, height, xPos, yPos, xMove, yMove;
     protected boolean alive;
     protected String strImg1, strImg2, strImg3;
     protected ImageIcon icon;
     protected Image image;
-
-
-    /***** METHODES *****/
 
     public int getWidth() {
         return width;

@@ -2,19 +2,21 @@ package fr.app.game;
 
 import javax.swing.JFrame;
 
-import fr.app.ressources.Constantes;
+import fr.app.ressources.GameConfig;
 
 
 public class Main {
-    /***** VARIABLES *****/
 
     public static Scene scene;
     public static boolean game = true;
 
-    /***** METHODES *****/
+    /**
+     *
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
         JFrame screen = new JFrame("Space Invaders");
-        screen.setSize(Constantes.SCREEN_WIDTH, Constantes.SCREEN_HEIGHT);
+        screen.setSize(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
         screen.setResizable(false);
         screen.setLocationRelativeTo(null);
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

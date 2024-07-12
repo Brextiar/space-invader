@@ -2,7 +2,7 @@ package fr.app.entities;
 
 import fr.app.game.Main;
 import fr.app.ressources.Chrono;
-import fr.app.ressources.Constantes;
+import fr.app.ressources.GameConfig;
 import fr.app.ressources.Sound;
 
 import javax.swing.*;
@@ -14,13 +14,17 @@ public class EnemyFire extends Entity {
 
     Random random = new Random();
 
+    /**
+     * Constructor
+     * @param enemyPositionArr the position of the enemy which fired
+     */
     public EnemyFire(int[] enemyPositionArr) {
-        super.xPos = enemyPositionArr[0] + Constantes.ENEMY_WIDTH / 2 - 1;
-        super.yPos = enemyPositionArr[1] + Constantes.ENEMY_HEIGHT;
-        super.width = Constantes.ENEMY_FIRE_WIDTH;
-        super.height = Constantes.ENEMY_FIRE_HEIGHT;
+        super.xPos = enemyPositionArr[0] + GameConfig.ENEMY_WIDTH / 2 - 1;
+        super.yPos = enemyPositionArr[1] + GameConfig.ENEMY_HEIGHT;
+        super.width = GameConfig.ENEMY_FIRE_WIDTH;
+        super.height = GameConfig.ENEMY_FIRE_HEIGHT;
         super.xMove = 0;
-        super.yMove = Constantes.ENEMY_Y_MOVE;
+        super.yMove = GameConfig.ENEMY_Y_MOVE;
         super.strImg1 = "images/tirAlien1.png";
         super.strImg2 = "images/tirAlien2.png";
         super.strImg3 = "";
@@ -33,45 +37,70 @@ public class EnemyFire extends Entity {
         super.image = this.icon.getImage();
     }
 
+    /**
+     * Move the enemy fire
+     * @return the new position of the enemy fire
+     */
     public int enemyFireMove() {
         if (Chrono.turnCounter % 4 == 0) {
             if (this.yPos < 600) {
-                this.yPos += Constantes.ENEMY_FIRE_Y_MOVE;
+                this.yPos += GameConfig.ENEMY_FIRE_Y_MOVE;
             }
         }
         return this.yPos;
     }
 
+    /**
+     *
+     * @param graphics the graphics object
+     */
     public void drawEnemyFire(Graphics graphics) {
         graphics.drawImage(this.image, this.xPos, this.enemyFireMove(), null);
     }
 
+    /**
+     *
+     * @return true if the enemy fire is in the castle's height range
+     */
     public boolean enemyFireIsInCastleHeigthRange() {
-        return this.yPos < Constantes.CASTLE_POS_Y + Constantes.CASTLE_HEIGHT
-                && this.yPos + this.height > Constantes.CASTLE_POS_Y;
+        return this.yPos < GameConfig.CASTLE_POS_Y + GameConfig.CASTLE_HEIGHT
+                && this.yPos + this.height > GameConfig.CASTLE_POS_Y;
     }
 
+    /**
+     *
+     * @return the number of the castle in which the enemy fire is
+     */
     private int findFiredCastle() {
         int castleNbr = -1;
         int col = -1;
         while (castleNbr == -1 && col < 4) {
             col++;
-            if (this.xPos + this.width - 1 > Constantes.SCREEN_MARGIN + Constantes.CASTLE_INIT_POS_X + col * (Constantes.CASTLE_WIDTH + Constantes.CASTLE_GAP)
-                    && this.xPos + 1 < Constantes.SCREEN_MARGIN + Constantes.CASTLE_INIT_POS_X + Constantes.CASTLE_WIDTH + col * (Constantes.CASTLE_WIDTH + Constantes.CASTLE_GAP)) {
+            if (this.xPos + this.width - 1 > GameConfig.SCREEN_MARGIN + GameConfig.CASTLE_INIT_POS_X + col * (GameConfig.CASTLE_WIDTH + GameConfig.CASTLE_GAP)
+                    && this.xPos + 1 < GameConfig.SCREEN_MARGIN + GameConfig.CASTLE_INIT_POS_X + GameConfig.CASTLE_WIDTH + col * (GameConfig.CASTLE_WIDTH + GameConfig.CASTLE_GAP)) {
                 castleNbr = col;
             }
         }
         return castleNbr;
     }
 
+    /**
+     *
+     * @param castle the castle in which the enemy fire is
+     * @return the x position of the contact of the enemy fire with the castle
+     */
     private int xFireContactCastle(Castle castle) {
         int xFireContactCastle = -1;
-        if (this.xPos + this.width > castle.getxPos() && this.xPos < castle.getxPos() + Constantes.CASTLE_WIDTH) {
+        if (this.xPos + this.width > castle.getxPos() && this.xPos < castle.getxPos() + GameConfig.CASTLE_WIDTH) {
             xFireContactCastle = this.xPos;
         }
         return xFireContactCastle;
     }
 
+    /**
+     *
+     * @return an array contain the number of the castle in which the enemy fire is and the x position of the contact of the enemy fire with the castle
+     */
     public int[] touchingFirePosition() {
         int[] touchingFirePosition = {-1, -1};
         if (this.enemyFireIsInCastleHeigthRange()) {
@@ -83,6 +112,10 @@ public class EnemyFire extends Entity {
         return touchingFirePosition;
     }
 
+    /**
+     *
+     * @param castles Array of the castles
+     */
     public void enemyFireDestructCastle(Castle[] castles) {
         int[] touchingFirePosition = this.touchingFirePosition();
         if (touchingFirePosition[0] != -1) {
@@ -94,6 +127,11 @@ public class EnemyFire extends Entity {
         }
     }
 
+    /**
+     *
+     * @param spaceship the spaceship
+     * @return true if the enemy fire is touching the spaceship
+     */
     public boolean spaceshipTouching(Spaceship spaceship) {
         if (this.yPos < spaceship.getyPos() + spaceship.getHeight()
                 && this.yPos + this.height > spaceship.getyPos()

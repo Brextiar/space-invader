@@ -1,7 +1,7 @@
 package fr.app.entities;
 
 import fr.app.game.Main;
-import fr.app.ressources.Constantes;
+import fr.app.ressources.GameConfig;
 import fr.app.ressources.Sound;
 
 import javax.swing.*;
@@ -12,13 +12,16 @@ public class SpaceshipFire extends Entity {
 
     private boolean isFiring = false;
 
+    /**
+     * Constructor
+     */
     public SpaceshipFire() {
         super.xPos = 0;
-        super.yPos = Constantes.SPACESHIP_Y_POS - Constantes.SPACESHIP_FIRE_HEIGHT;
-        super.width = Constantes.SPACESHIP_FIRE_WIDTH;
-        super.height = Constantes.SPACESHIP_FIRE_HEIGHT;
+        super.yPos = GameConfig.SPACESHIP_Y_POS - GameConfig.SPACESHIP_FIRE_HEIGHT;
+        super.width = GameConfig.SPACESHIP_FIRE_WIDTH;
+        super.height = GameConfig.SPACESHIP_FIRE_HEIGHT;
         super.xMove = 0;
-        super.yMove = Constantes.SPACESHIP_FIRE_Y_MOVE;
+        super.yMove = GameConfig.SPACESHIP_FIRE_Y_MOVE;
         super.strImg1 = "images/tirVaisseau.png";
         super.strImg2 = "";
         super.strImg3 = "";
@@ -34,10 +37,14 @@ public class SpaceshipFire extends Entity {
         isFiring = firing;
     }
 
+    /**
+     *
+     * @return the new y position of the spaceship
+     */
     public int fireMove() {
         if (isFiring) {
             if (this.yPos > 0) {
-                this.yPos = this.yPos - Constantes.SPACESHIP_FIRE_Y_MOVE;
+                this.yPos = this.yPos - GameConfig.SPACESHIP_FIRE_Y_MOVE;
             } else {
                 isFiring = false;
             }
@@ -45,10 +52,19 @@ public class SpaceshipFire extends Entity {
         return yPos;
     }
 
+    /**
+     * Display the spaceship fire on the screen
+     * @param graphics the graphics object
+     */
     public void drawSpaceshipFire(Graphics graphics) {
         graphics.drawImage(this.image, this.xPos, this.fireMove(), null);
     }
 
+    /**
+     *
+     * @param enemy the enemy
+     * @return true if the spaceship fire hit the enemy
+     */
     public boolean hasKillEnemy(Enemy enemy) {
 
         if (this.yPos < enemy.getyPos() + enemy.getHeight()
@@ -62,32 +78,49 @@ public class SpaceshipFire extends Entity {
         }
     }
 
+    /**
+     *
+     * @return true if the spaceship fire is in the castle
+     */
     private boolean spaceshipFireIsInCastleHeigthRange() {
-        return this.yPos < Constantes.CASTLE_POS_Y + Constantes.CASTLE_HEIGHT
-                && this.yPos + this.height > Constantes.CASTLE_POS_Y;
+        return this.yPos < GameConfig.CASTLE_POS_Y + GameConfig.CASTLE_HEIGHT
+                && this.yPos + this.height > GameConfig.CASTLE_POS_Y;
     }
 
+    /**
+     *
+     * @return the number of the castle in which the spaceship fire is
+     */
     private int findCastleFired() {
         int castleNbr = -1;
         int col = -1;
         while (castleNbr == -1 && col < 4) {
             col++;
-            if (this.xPos + this.width > Constantes.SCREEN_MARGIN + Constantes.CASTLE_INIT_POS_X + col * (Constantes.CASTLE_WIDTH + Constantes.CASTLE_GAP)
-                    && this.xPos < Constantes.SCREEN_MARGIN + Constantes.CASTLE_INIT_POS_X + Constantes.CASTLE_WIDTH + col * (Constantes.CASTLE_WIDTH + Constantes.CASTLE_GAP)) {
+            if (this.xPos + this.width > GameConfig.SCREEN_MARGIN + GameConfig.CASTLE_INIT_POS_X + col * (GameConfig.CASTLE_WIDTH + GameConfig.CASTLE_GAP)
+                    && this.xPos < GameConfig.SCREEN_MARGIN + GameConfig.CASTLE_INIT_POS_X + GameConfig.CASTLE_WIDTH + col * (GameConfig.CASTLE_WIDTH + GameConfig.CASTLE_GAP)) {
                 castleNbr = col;
             }
         }
         return castleNbr;
     }
 
+    /**
+     *
+     * @param castle the castle
+     * @return the x position of the contact of the spaceship fire with the castle
+     */
     public int xFireContactCastle(Castle castle) {
         int xFireContactCastle = -1;
-        if (this.xPos + this.width > castle.getxPos() && this.xPos < castle.getxPos() + Constantes.CASTLE_WIDTH) {
+        if (this.xPos + this.width > castle.getxPos() && this.xPos < castle.getxPos() + GameConfig.CASTLE_WIDTH) {
             xFireContactCastle = this.xPos;
         }
         return xFireContactCastle;
     }
 
+    /**
+     *
+     * @return an array contain the number of the castle in which the spaceship fire is and the x position of the contact of the spaceship fire with the castle
+     */
     public int[] touchingFirePosition() {
         int [] castleColFired = {-1, -1};
         if (this.spaceshipFireIsInCastleHeigthRange()) {
@@ -99,6 +132,10 @@ public class SpaceshipFire extends Entity {
         return castleColFired;
     }
 
+    /**
+     *
+     * @param castles Array of the castles
+     */
     public void spaceShipFireDestructCastle (Castle[] castles) {
         int[] touchingFirePosition = this.touchingFirePosition();
         if (touchingFirePosition[0] != -1) {
@@ -109,6 +146,11 @@ public class SpaceshipFire extends Entity {
         }
     }
 
+    /**
+     *
+     * @param ovni the ovni
+     * @return true if the spaceship fire hit the ovni
+     */
     public boolean destroyOvni(Ovni ovni) {
         if (this.yPos < ovni.getyPos() + ovni.getHeight()
                 && this.yPos + this.height > ovni.getyPos()
